@@ -1,0 +1,9 @@
+<html>
+<head><title>home</title></head>
+<body>
+    <% messages.forEach((message) => { %>
+        <%- include('message', { user: message.user, text: message.text, added: message.added }) -%> 
+    <%   }) %>
+    <a href="/new"> add message </a>
+</body>
+</html>
