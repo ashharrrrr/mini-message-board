@@ -2,7 +2,7 @@
 <head><title>home</title></head>
 <body>
     <% messages.forEach((message) => { %>
-        <%- include('message', {id: message.id, user: message.user, text: message.text, added: message.added }) -%> 
+        <%- include('message', {id: message.id, user: message.username, text: message.text, added: message.added }) -%> 
     <%   }) %>
     <a href="/new"> add message </a>
 </body>

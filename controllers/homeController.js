@@ -1,6 +1,8 @@
-import { messages } from "../db.js";
+import { getAllMessagesDB, getMessageDB, addMessageDB } from '../db/queries.js';
 
 export async function homeController(req, res) {
+    const messages = await getAllMessagesDB();
+    console.log(messages);
     res.render("home", { messages: messages });
 }
 
@@ -8,23 +10,24 @@ export async function getForm(req, res) {
     res.render("form");
 }
 
-let nextID = 3;
 
 export async function addMessage(req, res){
-    const userName = req.body.username;
+    console.log(req.body.username);
+    const username = req.body.username;
     const message = req.body.message;
-
-    messages.push({ id: nextID++, text: message, user: userName, added: new Date()})
-
+    await addMessageDB(message, username)
+    console.log('meow');
     res.redirect("/");
 }
 
 export async function getMessageDetails(req, res){
-    const { messageId } = req.params
-    const messageDetails = messages.find((message) => message.id === Number(messageId)) 
+    const { messageId } = req.params;
+    console.log(messageId);
+    const messageDetails = await getMessageDB(messageId); 
+    console.log(messageDetails);
     if(!messageDetails){
         console.log("Error: Path not found");
     }
 
-    res.render("messageDetails", { messageDetails: messageDetails})
+    res.render("messageDetails", { messageDetails: messageDetails[0]});
 }
